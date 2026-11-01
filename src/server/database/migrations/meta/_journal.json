@@ -1,0 +1,55 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1793268008922,
+      "tag": "0000_orgatex_dummy",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1793268910613,
+      "tag": "0001_scales",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1793270951691,
+      "tag": "0002_consumption_write_back",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1793297902079,
+      "tag": "0003_weighing",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1793336095513,
+      "tag": "0004_weighing_safety_identity_override",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1793361767099,
+      "tag": "0005_tickets",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1793361848841,
+      "tag": "0006_weighing_sessions_batch_context",
+      "breakpoints": true
+    }
+  ]
+}

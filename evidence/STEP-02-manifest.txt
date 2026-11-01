@@ -1,0 +1,21 @@
+$ node --version
+v24.15.0
+
+$ cat .specsmd/manifest.yaml
+flow: aidlc
+version: 0.1.74
+installed_at: '2026-10-29T07:33:50.521Z'
+tools:
+  - claude
+
+$ ls .specsmd/aidlc/agents/
+construction-agent.md
+inception-agent.md
+master-agent.md
+operations-agent.md
+
+$ ls .claude/commands/
+specsmd-construction-agent.md
+specsmd-inception-agent.md
+specsmd-master-agent.md
+specsmd-operations-agent.md

@@ -1,0 +1,92 @@
+spawn npx -y specsmd@latest install
+⠙⠹⠸⠼
+
+ ███████╗ ██████╗  ███████╗  ██████╗ ███████╗     ███╗   ███╗ ██████╗
+ ██╔════╝ ██╔══██╗ ██╔════╝ ██╔════╝ ██╔════╝     ████╗ ████║ ██╔══██╗
+ ███████╗ ██████╔╝ █████╗   ██║      ███████╗     ██╔████╔██║ ██║  ██║
+ ╚════██║ ██╔═══╝  ██╔══╝   ██║      ╚════██║     ██║╚██╔╝██║ ██║  ██║
+ ███████║ ██║      ███████╗ ╚██████╗ ███████║ ██╗ ██║ ╚═╝ ██║ ██████╔╝
+ ╚══════╝ ╚═╝      ╚══════╝  ╚═════╝ ╚══════╝ ╚═╝ ╚═╝     ╚═╝ ╚═════╝
+
+ AI-native development orchestration v0.1.74  https://specs.md
+
+
+Installation
+────────────
+
+[1/4] Detecting agentic coding tools...
+ No agentic coding tools detected
+
+[2/4] Select target tools
+  [Space] toggle  [Enter] confirm  [a] toggle all
+  [x] = selected    [ ] = not selected
+
+? Choose tools: ›  
+◯   Claude Code
+◯   Cursor
+◯   GitHub Copilot
+◯   Google Antigravity
+◯   Windsurf
+◯   Cline
+◯   Roo Code
+◯   Kiro CLI
+◯   Gemini CLI
+◯ ↓ Codex? Choose tools: ›  
+◉   Claude Code
+◯   Cursor
+◯   GitHub Copilot
+◯   Google Antigravity
+◯   Windsurf
+◯   Cline
+◯   Roo Code
+◯   Kiro CLI
+◯   Gemini CLI
+◯ ↓ Codex✔ Choose tools: › Claude Code
+
+[3/4] Select SDLC flow
+  Learn more about flows: https://specs.md/architecture/flows
+
+? Which SDLC flow would you like to install? › - Use arrow-keys. Return to submit.
+❯   FIRE - Adaptive execution - Brownfield/monorepo ready, right-sizes rigor to complexity
+    AI-DLC - Full methodology - Comprehensive traceability, DDD or Simple bolt types
+    Simple - Spec generation only (Kiro style) - Creates requirement/design/task docs, no execution tracking
+    Ideation - Creative ideation - Spark → Flame → Forge idea generation and shaping
+? Which SDLC flow would you like to install? › - Use arrow-keys. Return to submit.
+    FIRE - Adaptive execution - Brownfield/monorepo ready, right-sizes rigor to complexity
+❯   AI-DLC - Full methodology - Comprehensive traceability, DDD or Simple bolt types
+    Simple - Spec generation only (Kiro style) - Creates requirement/design/task docs, no execution tracking
+    Ideation - Creative ideation - Spark → Flame → Forge idea generation and shaping
+✔ Which SDLC flow would you like to install? › AI-DLC - Full methodology - Comprehensive traceability, DDD or Simple bolt types
+
+[4/4] Installing AI-DLC flow...
+  Installing commands to .claude/commands/...
+ Installed 4 commands for Claude Code
+  Installing agents to .claude/agents/...
+ Installed 4 agents for Claude Code
+  Installing flow resources to .specsmd/aidlc/...
+ Installed flow resources
+ Created installation manifest
+
+╭───────────────────────── Installation Complete ──────────────────────────╮
+│AI-DLC flow installed successfully!                 │
+╰──────────────────────────────────────────────────────────────────────────╯
+
+Next steps:
+  1. Read .specsmd/aidlc/quick-start.md for getting started
+  2. Open Claude Code and run /specsmd-master-agent
+
+
+────────────────────────────────────────────────────────────────────────
+  ★ IDE Extension
+────────────────────────────────────────────────────────────────────────
+
+  Enhance your experience with the specsmd IDE extension!
+
+  Learn more:                https://specs.md/getting-started/ide-extension
+  VS Code:                   https://marketplace.visualstudio.com/items?itemName=fabriqaai.specsmd
+  Cursor/Antigravity/Windsurf: https://open-vsx.org/extension/fabriqaai/specsmd
+
+────────────────────────────────────────────────────────────────────────
+
+
+⠙

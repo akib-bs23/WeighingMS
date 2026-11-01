@@ -1,0 +1,64 @@
+[
+  {
+    "consumptionId": "9f227c62-eaf3-4976-ac85-7cd4ccd8204d",
+    "batchId": "B-24187",
+    "idempotencyKey": "86e6866f-4c7b-431f-b625-68ed3f7e7ca2",
+    "confirmedAt": "2026-11-01T05:29:22.719Z",
+    "lineCount": 5,
+    "stationId": "STN-01",
+    "operatorId": "OP-001",
+    "completedAt": "2026-11-01T05:29:22.718Z",
+    "lines": [
+      {
+        "componentId": "RC-24187-01",
+        "dyestuffCode": "DYE-1180",
+        "lotId": "2026-0341",
+        "targetMg": 1240000,
+        "actualMg": 1242400,
+        "uom": "g",
+        "scaleId": "scale-3kg",
+        "result": "IN_TOLERANCE"
+      },
+      {
+        "componentId": "RC-24187-02",
+        "dyestuffCode": "DYE-2204",
+        "lotId": "2026-0298",
+        "targetMg": 386000,
+        "actualMg": 386800,
+        "uom": "g",
+        "scaleId": "scale-3kg",
+        "result": "IN_TOLERANCE"
+      },
+      {
+        "componentId": "RC-24187-03",
+        "dyestuffCode": "DYE-4471",
+        "lotId": "2026-0387",
+        "targetMg": 94000,
+        "actualMg": 94200,
+        "uom": "g",
+        "scaleId": "scale-3kg",
+        "result": "IN_TOLERANCE"
+      },
+      {
+        "componentId": "RC-24187-04",
+        "dyestuffCode": "AUX-0101",
+        "lotId": "2026-0112",
+        "targetMg": 24000000,
+        "actualMg": 24048000,
+        "uom": "kg",
+        "scaleId": "scale-32kg",
+        "result": "IN_TOLERANCE"
+      },
+      {
+        "componentId": "RC-24187-05",
+        "dyestuffCode": "AUX-0107",
+        "lotId": "2026-0155",
+        "targetMg": 9600000,
+        "actualMg": 9619000,
+        "uom": "kg",
+        "scaleId": "scale-32kg",
+        "result": "IN_TOLERANCE"
+      }
+    ]
+  }
+]

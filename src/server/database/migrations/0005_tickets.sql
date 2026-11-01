@@ -1,0 +1,20 @@
+CREATE TABLE `tickets` (
+	`session_id` text PRIMARY KEY NOT NULL,
+	`ticket_id` text NOT NULL,
+	`batch_id` text NOT NULL,
+	`order_ref` text NOT NULL,
+	`machine_ref` text NOT NULL,
+	`shade_code` text NOT NULL,
+	`date` text NOT NULL,
+	`operator_name` text NOT NULL,
+	`lines_json` text NOT NULL,
+	`tolerance_summary` text NOT NULL,
+	`barcode_value` text NOT NULL,
+	`status` text NOT NULL,
+	`job_id` text,
+	`printed_at` text,
+	`is_reprint` integer NOT NULL,
+	`attempts` integer NOT NULL,
+	`last_error` text,
+	`updated_at` text NOT NULL
+);

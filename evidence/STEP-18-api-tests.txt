@@ -1,0 +1,809 @@
+WeighingMS — STEP 18 Dummy API tests
+Generated: 2026-10-29T10:33:55Z
+API: http://localhost:3000 (pnpm dev:server)
+Note: training contracts only — no claim about the real OrgaTEX, scale indicator or scanner interfaces.
+
+===== 1. Dummy OrgaTEX (bolt 001) =====
+
+$ curl -s http://localhost:3000/api/batches
+[
+  {
+    "batchId": "B-24187",
+    "orderRef": "SO-9931",
+    "machineRef": "JET-04",
+    "fabricDesc": "100% CTN knit",
+    "fabricWeightKg": 480,
+    "shadeCode": "Teal 4C",
+    "componentCount": 5,
+    "status": "RELEASED",
+    "recipeId": "R-24187"
+  },
+  {
+    "batchId": "B-24188",
+    "orderRef": "SO-9931",
+    "machineRef": "JET-07",
+    "fabricDesc": "100% CTN knit",
+    "fabricWeightKg": 520,
+    "shadeCode": "Teal 4C",
+    "componentCount": 5,
+    "status": "QUEUED",
+    "recipeId": "R-24188"
+  },
+  {
+    "batchId": "B-24190",
+    "orderRef": "SO-9944",
+    "machineRef": "JET-02",
+    "fabricDesc": "CVC fleece",
+    "fabricWeightKg": 310,
+    "shadeCode": "Navy 12",
+    "componentCount": 7,
+    "status": "QUEUED",
+    "recipeId": "R-24190"
+  },
+  {
+    "batchId": "B-24191",
+    "orderRef": "SO-9947",
+    "machineRef": "WINCH-01",
+    "fabricDesc": "Viscose jersey",
+    "fabricWeightKg": 190,
+    "shadeCode": "Rose 08",
+    "componentCount": 4,
+    "status": "QUEUED",
+    "recipeId": "R-24191"
+  }
+]
+
+$ curl -s http://localhost:3000/api/batches/B-24187
+{
+  "batchId": "B-24187",
+  "orderRef": "SO-9931",
+  "machineRef": "JET-04",
+  "fabricDesc": "100% CTN knit",
+  "fabricWeightKg": 480,
+  "shadeCode": "Teal 4C",
+  "componentCount": 5,
+  "status": "RELEASED",
+  "recipeId": "R-24187"
+}
+
+$ curl -s http://localhost:3000/api/batches/B-24187/recipe
+{
+  "batchId": "B-24187",
+  "recipeId": "R-24187",
+  "shadeCode": "Teal 4C",
+  "components": [
+    {
+      "componentId": "RC-24187-01",
+      "sequence": 1,
+      "dyestuff": {
+        "code": "DYE-1180",
+        "name": "Remazol Brill. Blue RSPL",
+        "type": "DYE",
+        "colourHex": "#1f4fa8",
+        "barcode": "DYE-1180"
+      },
+      "targetMg": 1240000,
+      "uom": "g",
+      "toleranceMg": 6000,
+      "displayMaxMg": 1600000,
+      "lotId": "2026-0341",
+      "containerId": "C-09"
+    },
+    {
+      "componentId": "RC-24187-02",
+      "sequence": 2,
+      "dyestuff": {
+        "code": "DYE-2204",
+        "name": "Remazol Red RB",
+        "type": "DYE",
+        "colourHex": "#b8253a",
+        "barcode": "DYE-2204"
+      },
+      "targetMg": 386000,
+      "uom": "g",
+      "toleranceMg": 2000,
+      "displayMaxMg": 520000,
+      "lotId": "2026-0298",
+      "containerId": "C-11"
+    },
+    {
+      "componentId": "RC-24187-03",
+      "sequence": 3,
+      "dyestuff": {
+        "code": "DYE-4471",
+        "name": "Remazol Yellow RGB",
+        "type": "DYE",
+        "colourHex": "#d9a520",
+        "barcode": "DYE-4471"
+      },
+      "targetMg": 94000,
+      "uom": "g",
+      "toleranceMg": 500,
+      "displayMaxMg": 125000,
+      "lotId": "2026-0387",
+      "containerId": "C-12"
+    },
+    {
+      "componentId": "RC-24187-04",
+      "sequence": 4,
+      "dyestuff": {
+        "code": "AUX-0101",
+        "name": "Sodium Sulphate",
+        "type": "SALT",
+        "colourHex": "#c9d2dc",
+        "barcode": "AUX-0101"
+      },
+      "targetMg": 24000000,
+      "uom": "kg",
+      "toleranceMg": 120000,
+      "displayMaxMg": 32000000,
+      "lotId": "2026-0112",
+      "containerId": "D-03"
+    },
+    {
+      "componentId": "RC-24187-05",
+      "sequence": 5,
+      "dyestuff": {
+        "code": "AUX-0107",
+        "name": "Soda Ash",
+        "type": "ALKALI",
+        "colourHex": "#e4eaf0",
+        "barcode": "AUX-0107"
+      },
+      "targetMg": 9600000,
+      "uom": "kg",
+      "toleranceMg": 48000,
+      "displayMaxMg": 14000000,
+      "lotId": "2026-0155",
+      "containerId": "D-05"
+    }
+  ]
+}
+
+$ curl -s http://localhost:3000/api/batches/B-00000
+{
+  "error": {
+    "code": "BATCH_NOT_FOUND",
+    "message": "Batch B-00000 not found",
+    "details": {
+      "batchId": "B-00000"
+    }
+  }
+}
+
+$ curl -s http://localhost:3000/api/batches/B-24188/recipe
+{
+  "error": {
+    "code": "RECIPE_NOT_FOUND",
+    "message": "No recipe issued for batch B-24188",
+    "details": {
+      "batchId": "B-24188",
+      "recipeId": "R-24188"
+    }
+  }
+}
+
+$ curl -s -X PUT -H 'content-type: application/json' -d '{"online":false}' http://localhost:3000/api/training/orgatex
+{
+  "online": false,
+  "lastServedAt": "2026-10-29T10:33:55.648Z"
+}
+
+$ curl -s http://localhost:3000/api/batches
+{
+  "error": {
+    "code": "ORGATEX_UNAVAILABLE",
+    "message": "OrgaTEX is unavailable"
+  }
+}
+
+$ curl -s -X PUT -H 'content-type: application/json' -d '{"online":true}' http://localhost:3000/api/training/orgatex
+{
+  "online": true,
+  "lastServedAt": "2026-10-29T10:33:55.648Z"
+}
+
+===== 2. Dummy Scales (bolt 002) =====
+
+$ curl -s http://localhost:3000/api/scales
+[
+  {
+    "scaleId": "scale-3kg",
+    "class": "PRECISION",
+    "name": "3 kg precision",
+    "uom": "g",
+    "capacityMg": 3000000,
+    "resolutionMg": 100,
+    "online": true
+  },
+  {
+    "scaleId": "scale-32kg",
+    "class": "FLOOR",
+    "name": "32 kg floor",
+    "uom": "kg",
+    "capacityMg": 32000000,
+    "resolutionMg": 1000,
+    "online": true
+  }
+]
+
+$ curl -s http://localhost:3000/api/scales/scale-3kg/status
+{
+  "scaleId": "scale-3kg",
+  "online": true,
+  "state": "READY",
+  "capacityMg": 3000000,
+  "resolutionMg": 100
+}
+
+$ curl -s http://localhost:3000/api/scales/scale-3kg/weight
+{
+  "scaleId": "scale-3kg",
+  "netMg": 0,
+  "stable": true,
+  "overload": false,
+  "error": null,
+  "readAt": "2026-10-29T10:33:55.698Z"
+}
+
+$ curl -s -X POST -H 'content-type: application/json' -d '{"netMg":214000}' http://localhost:3000/api/training/scales/scale-3kg/weight
+{
+  "scaleId": "scale-3kg",
+  "netMg": 214000,
+  "stable": true,
+  "overload": false,
+  "error": null,
+  "readAt": "2026-10-29T10:33:55.706Z"
+}
+
+$ curl -s -X POST http://localhost:3000/api/scales/scale-3kg/tare
+{
+  "scaleId": "scale-3kg",
+  "tareMg": 214000,
+  "netMg": 0
+}
+
+$ curl -s -X POST -H 'content-type: application/json' -d '{"netMg":93500}' http://localhost:3000/api/training/scales/scale-3kg/weight
+{
+  "scaleId": "scale-3kg",
+  "netMg": 93500,
+  "stable": true,
+  "overload": false,
+  "error": null,
+  "readAt": "2026-10-29T10:33:55.722Z"
+}
+
+$ curl -s http://localhost:3000/api/scales/scale-3kg/weight
+{
+  "scaleId": "scale-3kg",
+  "netMg": 93500,
+  "stable": true,
+  "overload": false,
+  "error": null,
+  "readAt": "2026-10-29T10:33:55.730Z"
+}
+
+# Simulated pour to 94.2 g over 1.5 s, sampled every 350 ms
+
+$ curl -s -X POST -H 'content-type: application/json' -d '{"toMg":94200,"durationMs":1500}' http://localhost:3000/api/training/scales/scale-3kg/ramp
+{
+  "scaleId": "scale-3kg",
+  "netMg": 93500,
+  "stable": false,
+  "overload": false,
+  "error": null,
+  "readAt": "2026-10-29T10:33:55.738Z"
+}
+
+  t+   0 ms  netMg= 93500  stable=false
+
+  t+ 350 ms  netMg= 93900  stable=false
+
+  t+ 700 ms  netMg= 94100  stable=false
+
+  t+1050 ms  netMg= 94200  stable=false
+
+  t+1400 ms  netMg= 94200  stable=true
+
+  t+1750 ms  netMg= 94200  stable=true
+
+
+
+$ curl -s -X POST -H 'content-type: application/json' -d '{"netMg":24000400}' http://localhost:3000/api/training/scales/scale-32kg/weight
+{
+  "scaleId": "scale-32kg",
+  "netMg": 24000000,
+  "stable": true,
+  "overload": false,
+  "error": null,
+  "readAt": "2026-10-29T10:33:58.049Z"
+}
+
+$ curl -s -X POST -H 'content-type: application/json' -d '{"netMg":3500000}' http://localhost:3000/api/training/scales/scale-3kg/weight
+{
+  "scaleId": "scale-3kg",
+  "netMg": 3500000,
+  "stable": true,
+  "overload": true,
+  "error": null,
+  "readAt": "2026-10-29T10:33:58.068Z"
+}
+
+$ curl -s -X POST -H 'content-type: application/json' -d '{"fault":"NO_READING"}' http://localhost:3000/api/training/scales/scale-3kg/weight
+{
+  "scaleId": "scale-3kg",
+  "netMg": null,
+  "stable": false,
+  "overload": false,
+  "error": "NO_READING",
+  "readAt": "2026-10-29T10:33:58.081Z"
+}
+
+$ curl -s -X PUT -H 'content-type: application/json' -d '{"online":false}' http://localhost:3000/api/training/scales/scale-3kg
+{
+  "scaleId": "scale-3kg",
+  "online": false,
+  "state": "OFFLINE",
+  "capacityMg": 3000000,
+  "resolutionMg": 100
+}
+
+$ curl -s http://localhost:3000/api/scales/scale-3kg/weight
+{
+  "error": {
+    "code": "SCALE_UNAVAILABLE",
+    "message": "Scale scale-3kg is not responding",
+    "details": {
+      "scaleId": "scale-3kg"
+    }
+  }
+}
+
+$ curl -s http://localhost:3000/api/scales
+[
+  {
+    "scaleId": "scale-3kg",
+    "class": "PRECISION",
+    "name": "3 kg precision",
+    "uom": "g",
+    "capacityMg": 3000000,
+    "resolutionMg": 100,
+    "online": false
+  },
+  {
+    "scaleId": "scale-32kg",
+    "class": "FLOOR",
+    "name": "32 kg floor",
+    "uom": "kg",
+    "capacityMg": 32000000,
+    "resolutionMg": 1000,
+    "online": true
+  }
+]
+
+$ curl -s -X PUT -H 'content-type: application/json' -d '{"online":true}' http://localhost:3000/api/training/scales/scale-3kg
+{
+  "scaleId": "scale-3kg",
+  "online": true,
+  "state": "READY",
+  "capacityMg": 3000000,
+  "resolutionMg": 100
+}
+
+$ curl -s http://localhost:3000/api/scales/nope/status
+{
+  "error": {
+    "code": "SCALE_NOT_FOUND",
+    "message": "Scale nope not found",
+    "details": {
+      "scaleId": "nope"
+    }
+  }
+}
+
+===== 3. Dummy Scanner (bolt 002) =====
+
+$ curl -s http://localhost:3000/api/scanner/status
+{
+  "online": true
+}
+
+$ curl -s -X POST -H 'content-type: application/json' -d '{"code":"B-24187"}' http://localhost:3000/api/training/scanner/scans
+{
+  "seq": 1,
+  "code": "B-24187",
+  "scannedAt": "2026-10-29T10:33:58.142Z"
+}
+
+$ curl -s -X POST -H 'content-type: application/json' -d '{"code":"DYE-4471"}' http://localhost:3000/api/training/scanner/scans
+{
+  "seq": 2,
+  "code": "DYE-4471",
+  "scannedAt": "2026-10-29T10:33:58.149Z"
+}
+
+$ curl -s 'http://localhost:3000/api/scanner/events?since=1'
+{
+  "events": [
+    {
+      "seq": 2,
+      "code": "DYE-4471",
+      "scannedAt": "2026-10-29T10:33:58.149Z"
+    }
+  ],
+  "lastSeq": 2
+}
+
+$ curl -s -X PUT -H 'content-type: application/json' -d '{"online":false}' http://localhost:3000/api/training/scanner
+{
+  "online": false
+}
+
+$ curl -s http://localhost:3000/api/scanner/events
+{
+  "error": {
+    "code": "SCANNER_UNAVAILABLE",
+    "message": "Scanner is not responding"
+  }
+}
+
+$ curl -s -X PUT -H 'content-type: application/json' -d '{"online":true}' http://localhost:3000/api/training/scanner
+{
+  "online": true
+}
+
+===== 4. Dummy OrgaTEX consumption (bolt 003) =====
+
+# Request body (consumption.json):
+{
+  "stationId": "STN-01",
+  "operatorId": "OP-001",
+  "completedAt": "2026-10-29T07:48:22Z",
+  "lines": [
+    {
+      "componentId": "RC-24187-01",
+      "dyestuffCode": "DYE-1180",
+      "lotId": "2026-0341",
+      "targetMg": 1240000,
+      "actualMg": 1241500,
+      "uom": "g",
+      "scaleId": "scale-3kg",
+      "result": "IN_TOLERANCE"
+    },
+    {
+      "componentId": "RC-24187-02",
+      "dyestuffCode": "DYE-2204",
+      "lotId": "2026-0298",
+      "targetMg": 386000,
+      "actualMg": 385400,
+      "uom": "g",
+      "scaleId": "scale-3kg",
+      "result": "IN_TOLERANCE"
+    },
+    {
+      "componentId": "RC-24187-03",
+      "dyestuffCode": "DYE-4471",
+      "lotId": "2026-0387",
+      "targetMg": 94000,
+      "actualMg": 94200,
+      "uom": "g",
+      "scaleId": "scale-3kg",
+      "result": "IN_TOLERANCE"
+    },
+    {
+      "componentId": "RC-24187-04",
+      "dyestuffCode": "AUX-0101",
+      "lotId": "2026-0112",
+      "targetMg": 24000000,
+      "actualMg": 23980000,
+      "uom": "kg",
+      "scaleId": "scale-32kg",
+      "result": "IN_TOLERANCE"
+    },
+    {
+      "componentId": "RC-24187-05",
+      "dyestuffCode": "AUX-0107",
+      "lotId": "2026-0155",
+      "targetMg": 9600000,
+      "actualMg": 9621000,
+      "uom": "kg",
+      "scaleId": "scale-32kg",
+      "result": "IN_TOLERANCE"
+    }
+  ]
+}
+
+$ curl -s -X POST -H 'content-type: application/json' -H 'Idempotency-Key: K1' -d @consumption.json http://localhost:3000/api/batches/B-24187/consumption
+{
+  "consumptionId": "11a05893-f28c-479c-a667-b3aa2e6cc39e",
+  "batchId": "B-24187",
+  "idempotencyKey": "K1",
+  "confirmedAt": "2026-10-29T10:55:09.992Z",
+  "lineCount": 5
+}
+
+$ curl -s -X POST -H 'content-type: application/json' -H 'Idempotency-Key: K1' -d @consumption.json http://localhost:3000/api/batches/B-24187/consumption
+{
+  "consumptionId": "11a05893-f28c-479c-a667-b3aa2e6cc39e",
+  "batchId": "B-24187",
+  "idempotencyKey": "K1",
+  "confirmedAt": "2026-10-29T10:55:09.992Z",
+  "lineCount": 5
+}
+
+$ curl -s -X POST -H 'content-type: application/json' -H 'Idempotency-Key: K2' -d @consumption.json http://localhost:3000/api/batches/B-24187/consumption
+{
+  "error": {
+    "code": "CONSUMPTION_ALREADY_POSTED",
+    "message": "Consumption for batch B-24187 has already been posted",
+    "details": {
+      "batchId": "B-24187",
+      "consumptionId": "11a05893-f28c-479c-a667-b3aa2e6cc39e"
+    }
+  }
+}
+
+$ curl -s -X POST -H 'content-type: application/json' -d @consumption.json http://localhost:3000/api/batches/B-24187/consumption
+{
+  "error": {
+    "code": "VALIDATION_FAILED",
+    "message": "Idempotency-Key header is required"
+  }
+}
+
+$ curl -s 'http://localhost:3000/api/training/orgatex/consumption?batchId=B-24187'
+[
+  {
+    "consumptionId": "11a05893-f28c-479c-a667-b3aa2e6cc39e",
+    "batchId": "B-24187",
+    "idempotencyKey": "K1",
+    "confirmedAt": "2026-10-29T10:55:09.992Z",
+    "lineCount": 5,
+    "stationId": "STN-01",
+    "operatorId": "OP-001",
+    "completedAt": "2026-10-29T07:48:22Z",
+    "lines": [
+      {
+        "componentId": "RC-24187-01",
+        "dyestuffCode": "DYE-1180",
+        "lotId": "2026-0341",
+        "targetMg": 1240000,
+        "actualMg": 1241500,
+        "uom": "g",
+        "scaleId": "scale-3kg",
+        "result": "IN_TOLERANCE"
+      },
+      {
+        "componentId": "RC-24187-02",
+        "dyestuffCode": "DYE-2204",
+        "lotId": "2026-0298",
+        "targetMg": 386000,
+        "actualMg": 385400,
+        "uom": "g",
+        "scaleId": "scale-3kg",
+        "result": "IN_TOLERANCE"
+      },
+      {
+        "componentId": "RC-24187-03",
+        "dyestuffCode": "DYE-4471",
+        "lotId": "2026-0387",
+        "targetMg": 94000,
+        "actualMg": 94200,
+        "uom": "g",
+        "scaleId": "scale-3kg",
+        "result": "IN_TOLERANCE"
+      },
+      {
+        "componentId": "RC-24187-04",
+        "dyestuffCode": "AUX-0101",
+        "lotId": "2026-0112",
+        "targetMg": 24000000,
+        "actualMg": 23980000,
+        "uom": "kg",
+        "scaleId": "scale-32kg",
+        "result": "IN_TOLERANCE"
+      },
+      {
+        "componentId": "RC-24187-05",
+        "dyestuffCode": "AUX-0107",
+        "lotId": "2026-0155",
+        "targetMg": 9600000,
+        "actualMg": 9621000,
+        "uom": "kg",
+        "scaleId": "scale-32kg",
+        "result": "IN_TOLERANCE"
+      }
+    ]
+  }
+]
+
+===== 5. Training reset =====
+$ curl -s -X POST http://localhost:3000/api/training/reset
+{
+  "reset": [
+    "dummy-orgatex",
+    "write-back",
+    "dummy-scales",
+    "dummy-scanner"
+  ],
+  "resetAt": "2026-10-29T10:55:10.042Z"
+}
+
+===== 6. Automated suite (pnpm test --reporter=verbose) =====
+ ✓ tests/server/integrations/scale/dummy-scale.service.test.ts > DummyScaleService pour simulation > rises monotonically, unstable, and lands exactly on the target 3ms
+ ✓ tests/server/integrations/scale/dummy-scale.service.test.ts > DummyScaleService pour simulation > eases out: fast first, slower near the target 1ms
+ ✓ tests/server/integrations/scale/dummy-scale.service.test.ts > DummyScaleService pour simulation > rounds intermediate values to the scale resolution 1ms
+ ✓ tests/server/integrations/scale/dummy-scale.service.test.ts > DummyScaleService pour simulation > pours from the current net weight, also downwards 1ms
+ ✓ tests/server/integrations/scale/dummy-scale.service.test.ts > DummyScaleService pour simulation > uses a 3 s default duration 1ms
+ ✓ tests/server/integrations/scale/dummy-scale.service.test.ts > DummyScaleService pour simulation > tare during a pour re-bases it on the new zero for the remaining time 1ms
+ ✓ tests/server/integrations/scale/dummy-scale.service.test.ts > DummyScaleService pour simulation > starts a pour from zero after a fault 1ms
+ ✓ tests/server/integrations/scale/dummy-scale.service.test.ts > DummyScaleService pour simulation > stamps readings with the clock time 1ms
+ ✓ tests/server/health.api.test.ts > Health and error format > GET /api/health returns ok 20ms
+ ✓ tests/server/health.api.test.ts > Health and error format > unknown routes use the standard error format 3ms
+ ✓ tests/server/integrations/orgatex/write-back.service.test.ts > WriteBackService > confirms immediately when OrgaTEX is online 3ms
+ ✓ tests/server/integrations/orgatex/write-back.service.test.ts > WriteBackService > keeps the batch completed locally as PENDING when OrgaTEX is unavailable 1ms
+ ✓ tests/server/integrations/orgatex/write-back.service.test.ts > WriteBackService > stays PENDING while OrgaTEX is still down, counting attempts 1ms
+ ✓ tests/server/integrations/orgatex/write-back.service.test.ts > WriteBackService > retry after OrgaTEX returns confirms with exactly one stored record 2ms
+ ✓ tests/server/integrations/orgatex/write-back.service.test.ts > WriteBackService > retry when already CONFIRMED does not contact OrgaTEX again 2ms
+ ✓ tests/server/integrations/orgatex/write-back.service.test.ts > WriteBackService > submitting the same session twice is safe 1ms
+ ✓ tests/server/integrations/orgatex/write-back.service.test.ts > WriteBackService > never double-posts after an ambiguous failure (IR-08) 3ms
+ ✓ tests/server/integrations/orgatex/write-back.service.test.ts > WriteBackService > keeps a rejected posting PENDING with the rejection code 2ms
+ ✓ tests/server/integrations/orgatex/write-back.service.test.ts > WriteBackService > throws WRITE_BACK_NOT_FOUND for an unknown session 3ms
+ ✓ tests/server/integrations/orgatex/write-back.service.test.ts > WriteBackService > training reset clears write-backs 2ms
+ ✓ tests/server/integrations/scale/dummy-scale.adapter.test.ts > ScalePort (Dummy adapter) > is bound through dependency injection 5ms
+ ✓ tests/server/integrations/scale/dummy-scale.adapter.test.ts > ScalePort (Dummy adapter) > lists scales and reports status 4ms
+ ✓ tests/server/integrations/scale/dummy-scale.adapter.test.ts > ScalePort (Dummy adapter) > reads weight and tares 4ms
+ ✓ tests/server/integrations/scale/dummy-scale.adapter.test.ts > ScalePort (Dummy adapter) > rejects with SCALE_UNAVAILABLE (503) when offline 1ms
+ ✓ tests/server/integrations/scale/dummy-scale.adapter.test.ts > ScalePort (Dummy adapter) > rejects with SCALE_NOT_FOUND (404) for an unknown scale 1ms
+ ✓ tests/server/training/reset.api.test.ts > Training reset > seeds the database on application start 13ms
+ ✓ tests/server/training/reset.api.test.ts > Training reset > restores seed data and OrgaTEX availability in under 2 s 22ms
+ ✓ tests/server/training/reset.api.test.ts > Training reset > can be repeated (idempotent) 11ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.api.test.ts > Dummy OrgaTEX API > GET /api/batches > returns the four seeded batches with prototype values 14ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.api.test.ts > Dummy OrgaTEX API > GET /api/batches/:batchId > returns batch B-24187 3ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.api.test.ts > Dummy OrgaTEX API > GET /api/batches/:batchId > returns 404 BATCH_NOT_FOUND in the standard error format 6ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.api.test.ts > Dummy OrgaTEX API > GET /api/batches/:batchId > treats batch ids as exact (case-sensitive) 2ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.api.test.ts > Dummy OrgaTEX API > GET /api/batches/:batchId/recipe > returns the five components in sequence with prototype values in mg 4ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.api.test.ts > Dummy OrgaTEX API > GET /api/batches/:batchId/recipe > includes dyestuff colour and barcode for identification 1ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.api.test.ts > Dummy OrgaTEX API > GET /api/batches/:batchId/recipe > does not expose container tare (WeighingMS-owned) 2ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.api.test.ts > Dummy OrgaTEX API > GET /api/batches/:batchId/recipe > returns 404 RECIPE_NOT_FOUND for a queued batch without an issued recipe 1ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.api.test.ts > Dummy OrgaTEX API > GET /api/batches/:batchId/recipe > returns 404 BATCH_NOT_FOUND for an unknown batch 4ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.api.test.ts > Dummy OrgaTEX API > GET /api/batches/:batchId/recipe > offers no write method on the recipe (read-only) 15ms
+ ✓ tests/server/integrations/orgatex/orgatex-availability.api.test.ts > Dummy OrgaTEX availability toggle > reports online with no contact yet after start 29ms
+ ✓ tests/server/integrations/orgatex/orgatex-availability.api.test.ts > Dummy OrgaTEX availability toggle > returns 503 ORGATEX_UNAVAILABLE on all three endpoints when offline 9ms
+ ✓ tests/server/integrations/orgatex/orgatex-availability.api.test.ts > Dummy OrgaTEX availability toggle > resumes normal responses when set back online 13ms
+ ✓ tests/server/integrations/orgatex/orgatex-availability.api.test.ts > Dummy OrgaTEX availability toggle > records the time of the last successful response 4ms
+ ✓ tests/server/integrations/orgatex/orgatex-availability.api.test.ts > Dummy OrgaTEX availability toggle > rejects invalid body {"online":"no"} with 400 VALIDATION_FAILED 5ms
+ ✓ tests/server/integrations/orgatex/orgatex-availability.api.test.ts > Dummy OrgaTEX availability toggle > rejects invalid body {} with 400 VALIDATION_FAILED 6ms
+ ✓ tests/server/integrations/orgatex/orgatex-availability.api.test.ts > Dummy OrgaTEX availability toggle > rejects invalid body {"online":true,"extra":1} with 400 VALIDATION_FAILED 5ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > GET reports the scale state 27ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > PUT toggles availability and returns the new status 9ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > POST weight returns the resulting reading 3ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > setting a weight cancels a running pour 15ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > POST ramp starts an unstable pour 5ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > POST ramp with zero duration lands immediately and stable 6ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > POST weight rejects {} (neither netMg nor fault) with 400 3ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > POST weight rejects {"netMg":1,"fault":"NO_READING"} (both netMg and fault) with 400 5ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > rejects invalid body for /weight {"netMg":93.5} with 400 VALIDATION_FAILED 5ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > rejects invalid body for /weight {"fault":"OVERLOAD"} with 400 VALIDATION_FAILED 13ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > rejects invalid body for /ramp {} with 400 VALIDATION_FAILED 5ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > rejects invalid body for /ramp {"toMg":1,"durationMs":-1} with 400 VALIDATION_FAILED 2ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > GET /api/scales > lists the precision and floor scales from the seed 24ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > GET /api/scales > reflects an offline scale 8ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > GET /api/scales/:scaleId/status > reports READY with capacity and resolution 2ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > GET /api/scales/:scaleId/status > returns 404 SCALE_NOT_FOUND for an unknown scale 4ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > GET /api/scales/:scaleId/weight > starts at a stable zero 7ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > GET /api/scales/:scaleId/weight > returns a simulator-set weight (93.5 g) 9ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > GET /api/scales/:scaleId/weight > rounds scale-3kg reading 94230 mg to resolution → 94200 mg 7ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > GET /api/scales/:scaleId/weight > rounds scale-3kg reading 94250 mg to resolution → 94300 mg 9ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > GET /api/scales/:scaleId/weight > rounds scale-32kg reading 24000400 mg to resolution → 24000000 mg 7ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > GET /api/scales/:scaleId/weight > rounds scale-32kg reading 9621600 mg to resolution → 9622000 mg 15ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > GET /api/scales/:scaleId/weight > reports negative readings as-is for WeighingMS to reject 4ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > GET /api/scales/:scaleId/weight > flags overload above capacity (3 500 g on the 3 kg scale) 5ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > GET /api/scales/:scaleId/weight > reports a NO_READING fault with a null value 5ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > GET /api/scales/:scaleId/weight > returns 404 for an unknown scale 3ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > POST /api/scales/:scaleId/tare > zeroes the net reading with the load on the scale 5ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > POST /api/scales/:scaleId/tare > makes later weights relative to the new tare 6ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > rejects invalid body for /ramp {"toMg":1,"durationMs":60001} with 400 VALIDATION_FAILED 10ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > rejects invalid body for  {"online":"yes"} with 400 VALIDATION_FAILED 5ms
+ ✓ tests/server/integrations/scale/scale-simulator.api.test.ts > Scale simulator API (training) > returns 404 for an unknown scale 5ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > accepts valid consumption with 200 and a receipt 36ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > stores the record with every line (Step 26 stored data) 5ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > returns the original receipt for a retry with the same key and payload 11ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects the same key with a different payload (409 IDEMPOTENCY_CONFLICT) 11ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > refuses a second posting for the same batch with another key (409) 12ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > requires the Idempotency-Key header (null → 400) 4ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > requires the Idempotency-Key header ("" → 400) 11ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > requires the Idempotency-Key header ("   " → 400) 7ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects an invalid body (no lines) with 400 VALIDATION_FAILED 6ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects an invalid body (negative actual) with 400 VALIDATION_FAILED 8ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects an invalid body (fractional mg) with 400 VALIDATION_FAILED 4ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects an invalid body (zero target) with 400 VALIDATION_FAILED 6ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.api.test.ts > Dummy Scanner API > reports online status 24ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.api.test.ts > Dummy Scanner API > delivers an injected batch-card scan through the feed 10ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.api.test.ts > Dummy Scanner API > trims surrounding whitespace from codes 8ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.api.test.ts > Dummy Scanner API > numbers events and filters with since 18ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.api.test.ts > Dummy Scanner API > rejects blank code "" with 400 INVALID_SCAN 5ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.api.test.ts > Dummy Scanner API > rejects blank code "   " with 400 INVALID_SCAN 18ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.api.test.ts > Dummy Scanner API > rejects a missing code with 400 VALIDATION_FAILED 13ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.api.test.ts > Dummy Scanner API > rejects since=-1 with 400 4ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.api.test.ts > Dummy Scanner API > rejects since=abc with 400 3ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.api.test.ts > Dummy Scanner API > rejects since=1.5 with 400 3ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.api.test.ts > Dummy Scanner API > returns 503 SCANNER_UNAVAILABLE for inject and feed when offline 8ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.api.test.ts > Dummy Scanner API > works again when back online 8ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.api.test.ts > Dummy Scanner API > reset clears events and sequence numbers 8ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > converts "1240.0" g to 1240000 mg 1ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > converts "94.0" g to 94000 mg 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > converts "0.5" g to 500 mg 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > converts "0.1" g to 100 mg 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > converts "214" g to 214000 mg 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > converts "3000" g to 3000000 mg 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > converts "24.000" kg to 24000000 mg 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > converts "0.120" kg to 120000 mg 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > converts "0.048" kg to 48000 mg 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > converts "9.600" kg to 9600000 mg 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > converts "1.850" kg to 1850000 mg 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > converts "0.001" kg to 1000 mg 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > converts "0" g to 0 mg 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > returns exact integers where float arithmetic would drift 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > rejects "-5" g 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > rejects "abc" g 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > rejects "" g 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > rejects "1e3" g 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > rejects "0.0001" g 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > rejects "0.0000001" kg 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > rejects values beyond safe integer milligrams 0ms
+ ✓ tests/shared/parse-quantity.test.ts > parseQuantity > rejects an unknown unit 0ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > POST /api/scales/:scaleId/tare > accumulates when tared twice 7ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > POST /api/scales/:scaleId/tare > tares a faulted scale without moving the tare 5ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > offline scale > returns 503 SCALE_UNAVAILABLE for weight and tare, and OFFLINE status 9ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > offline scale > does not affect the other scale 4ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > offline scale > resumes from the last state when back online 10ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > training reset > registers scales and restores zero, online state 9ms
+ ✓ tests/server/integrations/scale/dummy-scale.api.test.ts > Dummy Scale API > serves weight reads fast enough for 10 Hz polling (< 20 ms) 19ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects an invalid body (unknown result) with 400 VALIDATION_FAILED 6ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects an invalid body (unknown unit) with 400 VALIDATION_FAILED 7ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects an invalid body (bad completedAt) with 400 VALIDATION_FAILED 10ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects an invalid body (missing stationId) with 400 VALIDATION_FAILED 6ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects a recipe mismatch (unknown component) with 422 5ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects a recipe mismatch (duplicate component) with 422 5ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects a recipe mismatch (missing component) with 422 4ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects a recipe mismatch (wrong dyestuff) with 422 4ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects a recipe mismatch (wrong lot) with 422 5ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > rejects a recipe mismatch (wrong unit) with 422 3ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > returns 404 BATCH_NOT_FOUND for an unknown batch 2ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > returns 404 RECIPE_NOT_FOUND for a batch without an issued recipe 2ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > returns 503 ORGATEX_UNAVAILABLE when OrgaTEX is offline and stores nothing 4ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > inspection lists all records or filters by batch 6ms
+ ✓ tests/server/integrations/orgatex/consumption.api.test.ts > Dummy OrgaTEX consumption receiver > training reset clears stored consumption 6ms
+ ✓ tests/server/common/api-exception.filter.test.ts > ApiExceptionFilter > maps unexpected errors to 500 INTERNAL_ERROR without leaking internals 3ms
+ ✓ tests/server/common/api-exception.filter.test.ts > ApiExceptionFilter > maps non-Error throws to 500 0ms
+ ✓ tests/server/common/api-exception.filter.test.ts > ApiExceptionFilter > logs 503 domain errors as warnings and omits empty details 0ms
+ ✓ tests/server/common/api-exception.filter.test.ts > ApiExceptionFilter > joins validation message arrays 0ms
+ ✓ tests/server/common/api-exception.filter.test.ts > ApiExceptionFilter > uses string responses and a generic code for unmapped statuses 0ms
+ ✓ tests/server/common/api-exception.filter.test.ts > ApiExceptionFilter > falls back to the exception message when the response has none 0ms
+ ✓ tests/server/training/seed-loader.test.ts > training seed > loads the prototype scenario 1ms
+ ✓ tests/server/training/seed-loader.test.ts > training seed > converts recipe quantities to integer milligrams 0ms
+ ✓ tests/server/training/seed-loader.test.ts > training seed > converts containers and scales to milligrams 0ms
+ ✓ tests/server/training/seed-loader.test.ts > training seed > stores the supervisor PIN only as a hash 0ms
+ ✓ tests/server/training/seed-loader.test.ts > training seed > rejects a component that references an unknown dyestuff 0ms
+ ✓ tests/server/training/seed-loader.test.ts > training seed > rejects quantities with too many decimals 0ms
+ ✓ tests/server/training/seed-loader.test.ts > training seed > rejects a batch whose component count does not match its recipe 0ms
+ ✓ tests/server/training/seed-loader.test.ts > training seed > rejects duplicate component sequence numbers 0ms
+ ✓ tests/server/training/seed-loader.test.ts > training seed > rejects an unknown batch status 0ms
+ ✓ tests/server/training/seed-loader.test.ts > training seed > rejects a zero target 0ms
+ ✓ tests/server/database/database.provider.test.ts > openDatabase > creates missing folders for a file database and applies migrations 7ms
+ ✓ tests/server/database/database.provider.test.ts > openDatabase > opens an in-memory database 1ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.adapter.test.ts > ScannerPort (Dummy adapter) > is bound through dependency injection 1ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.adapter.test.ts > ScannerPort (Dummy adapter) > reads injected scans after a sequence number 1ms
+ ✓ tests/server/integrations/scanner/dummy-scanner.adapter.test.ts > ScannerPort (Dummy adapter) > reports availability and rejects with SCANNER_UNAVAILABLE when offline 1ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.adapter.test.ts > OrgatexPort (Dummy adapter) > is bound through dependency injection 1ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.adapter.test.ts > OrgatexPort (Dummy adapter) > returns the same data as the Dummy endpoints 2ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.adapter.test.ts > OrgatexPort (Dummy adapter) > tracks the last successful contact 0ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.adapter.test.ts > OrgatexPort (Dummy adapter) > rejects with ORGATEX_UNAVAILABLE (503) when OrgaTEX is offline 0ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.adapter.test.ts > OrgatexPort (Dummy adapter) > rejects with BATCH_NOT_FOUND for an unknown batch 0ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.adapter.test.ts > OrgatexPort (Dummy adapter) > posts consumption and returns the receipt 1ms
+ ✓ tests/server/integrations/orgatex/dummy-orgatex.adapter.test.ts > OrgatexPort (Dummy adapter) > rejects posting with ORGATEX_UNAVAILABLE when offline 0ms
+ ✓ tests/server/integrations/orgatex/write-back.api.test.ts > Write-back API > returns 404 WRITE_BACK_NOT_FOUND before a session has completed 15ms
+ ✓ tests/server/integrations/orgatex/write-back.api.test.ts > Write-back API > shows PENDING then CONFIRMED after Retry once OrgaTEX is back 11ms
+ Test Files  18 passed (18)
+      Tests  175 passed (175)

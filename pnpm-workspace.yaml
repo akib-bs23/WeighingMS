@@ -1,0 +1,7 @@
+# Single-package project. pnpm 11 blocks dependency build scripts unless allowed here.
+allowBuilds:
+  better-sqlite3: true
+  '@swc/core': true
+  '@nestjs/core': false
+  esbuild: true
+  unrs-resolver: false

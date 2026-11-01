@@ -1,0 +1,60 @@
+WeighingMS — STEP 22 Tolerance Tests (workbook Step 22 / bolt 006)
+Generated: 2026-10-30T03:25:40Z
+
+Yellow RGB: target 94.0 g, tolerance +-0.5 g, band [93.5, 94.5] g (inclusive both ends).
+
+Required boundary demonstration (workbook Step 22):
+  93.4 g -> cannot confirm  (zone NEAR,  422 OUT_OF_TOLERANCE)
+  93.5 g -> can confirm     (zone OK,    200, actualMg 93500)
+  94.0 g -> can confirm     (zone OK,    200, actualMg 94000)
+  94.5 g -> can confirm     (zone OK,    200, actualMg 94500)
+  94.6 g -> cannot confirm  (zone OVER,  422 OUT_OF_TOLERANCE)
+
+Verified live against the running API (curl), and by the automated suite below.
+
+ ✓ tests/shared/weighing/tolerance.test.ts > toleranceBand > derives an inclusive band from target and tolerance 1ms
+ ✓ tests/shared/weighing/tolerance.test.ts > toleranceBand > a zero tolerance bands exactly the target (edge case, story 002) 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > evaluateZone (Yellow RGB: target 94.0 g, tolerance ±0.5 g — workbook Step 22) > 93400 mg -> NEAR 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > evaluateZone (Yellow RGB: target 94.0 g, tolerance ±0.5 g — workbook Step 22) > 93500 mg -> OK 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > evaluateZone (Yellow RGB: target 94.0 g, tolerance ±0.5 g — workbook Step 22) > 94000 mg -> OK 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > evaluateZone (Yellow RGB: target 94.0 g, tolerance ±0.5 g — workbook Step 22) > 94500 mg -> OK 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > evaluateZone (Yellow RGB: target 94.0 g, tolerance ±0.5 g — workbook Step 22) > 94600 mg -> OVER 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > evaluateZone (Yellow RGB: target 94.0 g, tolerance ±0.5 g — workbook Step 22) > near/under boundary: 84600 mg -> NEAR 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > evaluateZone (Yellow RGB: target 94.0 g, tolerance ±0.5 g — workbook Step 22) > near/under boundary: 84500 mg -> UNDER 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > evaluateZone (Yellow RGB: target 94.0 g, tolerance ±0.5 g — workbook Step 22) > near/under boundary: 0 mg -> UNDER 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > evaluateZone (Yellow RGB: target 94.0 g, tolerance ±0.5 g — workbook Step 22) > a zero-tolerance band is still inclusive at exactly the target 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > remaining > target 94000, reading 60000 -> 34000 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > remaining > target 94000, reading 96000 -> 0 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > remaining > target 94000, reading 94000 -> 0 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > statusText (exact wording, story 002 AC5) > under/near: DISPENSE — remaining REMAINING 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > statusText (exact wording, story 002 AC5) > ok: WITHIN TOLERANCE — PRESS OK TO CONFIRM 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > statusText (exact wording, story 002 AC5) > over: OVER TOLERANCE — SURPLUS +x REMAINING, measured from target 0ms
+ ✓ tests/shared/weighing/tolerance.test.ts > statusText (exact wording, story 002 AC5) > formats kg components to 3 decimals 0ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > start > creates a session with all 5 components pending and the first active and tared 5ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > start > resumes the same session when called again for the same batch 3ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > start > rejects starting a different batch while one is open (AS-6) 2ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > start > propagates batch eligibility and OrgaTEX errors unchanged 1ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > get > reloads a session by id (resume after reload, NFR-6) 1ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > get > throws SESSION_NOT_FOUND for an unknown id 1ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > activateComponent > selects the floor scale and tares it for a bulk component 2ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > activateComponent > returns the previously active component to pending without a record (story 003 AC5) 2ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > activateComponent > is idempotent when activating the already-active component 1ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > activateComponent > rejects activating a done component with 409 COMPONENT_DONE 2ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > activateComponent > rejects an unknown component with 404 1ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > retare > zeroes the live scale reading without creating a record 2ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > retare > does not change the session at all (nothing persisted changes) 1ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > confirm > records the weighing with full traceability and confirms IN_TOLERANCE 2ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > confirm > rejects 93400 mg as OUT_OF_TOLERANCE (422) and records nothing 2ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > confirm > rejects 94600 mg as OUT_OF_TOLERANCE (422) and records nothing 2ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > confirm > accepts 93500 mg (inclusive boundaries) 2ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > confirm > accepts 94000 mg (inclusive boundaries) 2ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > confirm > accepts 94500 mg (inclusive boundaries) 2ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > confirm > rejects an unstable reading with 422 READING_UNSTABLE and records nothing 3ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > confirm > reads the scale itself rather than trusting any client input (story 005 AC4) 2ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > confirm > progresses Blue RSPL -> Red RB -> Yellow RGB -> Sodium Sulphate -> Soda Ash in order 5ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > confirm > switches scale and unit when progressing from Yellow RGB to Sodium Sulphate (workbook Step 21) 3ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > confirm > jumping ahead returns progression to the lowest-sequence pending component (story 011 edge case) 2ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > training reset > clears sessions and records so the next start never hits SESSION_ALREADY_OPEN 3ms
+ ✓ tests/server/weighing/weighing-session.service.test.ts > WeighingSessionService > performance > confirms within a reasonable local latency budget 2ms
+ Test Files  2 passed (2)
+      Tests  44 passed (44)

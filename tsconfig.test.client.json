@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.client.json",
+  "compilerOptions": {
+    "composite": false,
+    "noEmit": true,
+    "emitDeclarationOnly": false,
+    "types": ["vite/client", "vitest/globals", "node"]
+  },
+  "include": [
+    "src/client/**/*.ts",
+    "src/client/**/*.tsx",
+    "src/shared/**/*.ts",
+    "tests/client/**/*.ts",
+    "tests/client/**/*.tsx"
+  ]
+}

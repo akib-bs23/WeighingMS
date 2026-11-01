@@ -1,0 +1,912 @@
+/*
+ * Station terminal tokens, following the supplied prototype (docs/customize-weighing-station.html)
+ * — re-implemented, not copied. The device screen stays dark in both page themes: it depicts a
+ * physical HMI panel.
+ */
+:root {
+  --hmi-bezel: #0a0d11;
+  --hmi-bg: #12161c;
+  --hmi-panel: #1a2029;
+  --hmi-panel-2: #212936;
+  --hmi-line: #2c3644;
+  --hmi-ink: #e9eef4;
+  --hmi-muted: #8998a9;
+  --hmi-dim: #63717f;
+  --ok: #2fbf6b;
+  --warn: #f0a726;
+  --over: #e8503a;
+  --steel: #5b8cc4;
+  --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  --sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #0f1216;
+  color: var(--hmi-ink);
+  font-family: var(--sans);
+}
+
+.wms-device {
+  background: var(--hmi-bezel);
+  border-radius: 10px;
+  padding: 16px;
+  max-width: 1180px;
+  margin: 24px auto;
+}
+
+.wms-screen {
+  background: var(--hmi-bg);
+  color: var(--hmi-ink);
+  border-radius: 3px;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 660px;
+  font-size: 15px;
+}
+
+.wms-topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 11px 18px;
+  background: var(--hmi-panel);
+  border-bottom: 1px solid var(--hmi-line);
+}
+
+.wms-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  font-weight: 700;
+}
+
+.wms-brand .station-id {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--hmi-dim);
+  letter-spacing: 0.1em;
+}
+
+.wms-spacer {
+  flex: 1 1 auto;
+}
+
+.wms-crumb {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--hmi-muted);
+}
+
+.wms-crumb b {
+  color: var(--hmi-ink);
+}
+
+.wms-operator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--hmi-muted);
+  padding: 4px 10px;
+  border: 1px solid var(--hmi-line);
+  border-radius: 3px;
+}
+
+.wms-operator .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ok);
+}
+
+.wms-strip {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 10px 18px;
+  background: var(--hmi-panel);
+  border-top: 1px solid var(--hmi-line);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--hmi-muted);
+}
+
+.wms-strip .stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.04em;
+}
+
+.wms-strip .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.wms-strip .dot.up {
+  background: var(--ok);
+}
+
+.wms-strip .dot.down {
+  background: var(--over);
+}
+
+/* Screen 1: batch queue */
+.wms-queue {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wms-scan-prompt {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 22px;
+  border: 1px dashed var(--hmi-line);
+  border-radius: 3px;
+  background: var(--hmi-panel);
+}
+
+.wms-scan-prompt .big {
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.wms-scan-prompt .sm {
+  font-size: 13px;
+  color: var(--hmi-muted);
+}
+
+.wms-beam {
+  width: 46px;
+  height: 46px;
+  border: 2px solid var(--steel);
+  border-radius: 3px;
+  position: relative;
+  flex: none;
+}
+
+.wms-beam::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 50%;
+  height: 2px;
+  background: var(--over);
+  animation: wms-scan 2.4s ease-in-out infinite;
+}
+
+@keyframes wms-scan {
+  0%,
+  100% {
+    transform: translateY(-13px);
+  }
+  50% {
+    transform: translateY(13px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wms-beam::before {
+    animation: none;
+  }
+}
+
+.wms-error-banner {
+  padding: 16px 18px;
+  border: 1px solid rgba(232, 80, 58, 0.45);
+  border-radius: 3px;
+  background: rgba(232, 80, 58, 0.08);
+  color: var(--over);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.wms-info-banner {
+  padding: 14px 18px;
+  border: 1px solid var(--hmi-line);
+  border-radius: 3px;
+  background: var(--hmi-panel);
+  color: var(--hmi-muted);
+}
+
+.wms-queue-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr 1fr 0.6fr 1fr;
+  width: 100%;
+  font-size: 13.5px;
+}
+
+.wms-queue-table .wms-cell {
+  padding: 10px 12px 10px 0;
+  display: flex;
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.wms-queue-table .wms-head {
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--hmi-dim);
+  font-weight: 650;
+  padding: 0 12px 8px 0;
+  border-bottom: 1px solid var(--hmi-line);
+}
+
+.wms-queue-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr 1fr 0.6fr 1fr;
+  width: 100%;
+  min-height: 60px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--hmi-line);
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.wms-queue-row:hover {
+  background: #1b222c;
+}
+
+.wms-queue-row:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.wms-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  padding: 4px 9px;
+  border-radius: 2px;
+  border: 1px solid var(--hmi-line);
+  color: var(--hmi-muted);
+  display: inline-block;
+}
+
+.wms-tag.released {
+  color: var(--ok);
+  border-color: rgba(47, 191, 107, 0.5);
+}
+
+.wms-key {
+  appearance: none;
+  font: inherit;
+  cursor: pointer;
+  min-height: 62px;
+  min-width: 150px;
+  padding: 0 24px;
+  border-radius: 3px;
+  border: 1px solid var(--hmi-line);
+  background: var(--hmi-panel-2);
+  color: var(--hmi-ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.wms-key:hover:not(:disabled) {
+  background: #2a3442;
+}
+
+.wms-key:disabled {
+  opacity: 0.34;
+  cursor: not-allowed;
+}
+
+.wms-key.ok {
+  background: var(--ok);
+  border-color: var(--ok);
+  color: #07240f;
+}
+
+.wms-key.ok:hover:not(:disabled) {
+  background: #35d178;
+}
+
+/* ── Screen 2: Weigh ─────────────────────────────────────────────── */
+.wms-stage {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  min-height: 520px;
+}
+
+@media (max-width: 860px) {
+  .wms-stage {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wms-rail {
+  border-right: 1px solid var(--hmi-line);
+  background: #151a22;
+  display: flex;
+  flex-direction: column;
+}
+
+.wms-rail-head {
+  padding: 13px 16px 11px;
+  border-bottom: 1px solid var(--hmi-line);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.wms-rail-head .t {
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--hmi-dim);
+  font-weight: 650;
+}
+
+.wms-rail-head .v {
+  font-family: var(--mono);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.wms-rail-head .m {
+  font-size: 12px;
+  color: var(--hmi-muted);
+}
+
+.wms-comps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.wms-comp {
+  display: grid;
+  grid-template-columns: 8px 1fr auto;
+  gap: 11px;
+  align-items: center;
+  width: 100%;
+  padding: 11px 16px;
+  border: 0;
+  border-bottom: 1px solid var(--hmi-line);
+  border-left: 3px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+.wms-comp:hover {
+  background: #1b222c;
+}
+
+.wms-comp[data-state='active'] {
+  background: var(--hmi-panel-2);
+  border-left-color: var(--warn);
+}
+
+.wms-comp[data-state='done'] {
+  opacity: 0.62;
+  cursor: default;
+}
+
+.wms-comp .swatch {
+  width: 8px;
+  height: 30px;
+  border-radius: 1px;
+}
+
+.wms-comp .nm {
+  font-size: 13.5px;
+  line-height: 1.3;
+}
+
+.wms-comp .sub {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--hmi-dim);
+  letter-spacing: 0.04em;
+}
+
+.wms-comp .qty {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.wms-comp .st {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-align: right;
+}
+
+.wms-comp[data-state='done'] .st {
+  color: var(--ok);
+}
+
+.wms-comp[data-state='active'] .st {
+  color: var(--warn);
+}
+
+.wms-comp[data-state='pending'] .st {
+  color: var(--hmi-dim);
+}
+
+.wms-weigh {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.wms-weigh-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.wms-weigh-head .who {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wms-weigh-head .nm {
+  font-size: 21px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.wms-weigh-head .meta {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--hmi-muted);
+  letter-spacing: 0.04em;
+}
+
+.wms-scale-badge {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  padding: 8px 13px;
+  border: 1px solid var(--steel);
+  border-radius: 3px;
+  background: rgba(91, 140, 196, 0.09);
+}
+
+.wms-scale-badge .k {
+  font-size: 9.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--steel);
+  font-weight: 650;
+}
+
+.wms-scale-badge .v {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.wms-scale-badge .auto {
+  font-size: 10px;
+  color: var(--hmi-dim);
+}
+
+.wms-readout {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 1px;
+  background: var(--hmi-line);
+  border: 1px solid var(--hmi-line);
+  border-radius: 3px;
+}
+
+@media (max-width: 700px) {
+  .wms-readout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wms-readout .cell {
+  background: var(--hmi-panel);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.wms-readout .cell .k {
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--hmi-dim);
+  font-weight: 650;
+}
+
+.wms-readout .cell .v {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.wms-readout .cell.live .v {
+  font-size: 52px;
+}
+
+.wms-readout .cell .u {
+  font-size: 15px;
+  color: var(--hmi-muted);
+  font-weight: 400;
+}
+
+.wms-readout .cell.live[data-zone='under'] .v {
+  color: var(--hmi-ink);
+}
+.wms-readout .cell.live[data-zone='near'] .v {
+  color: var(--warn);
+}
+.wms-readout .cell.live[data-zone='ok'] .v {
+  color: var(--ok);
+}
+.wms-readout .cell.live[data-zone='over'] .v {
+  color: var(--over);
+}
+.wms-readout .cell.live[data-zone='offline'] .v,
+.wms-readout .cell.live[data-zone='invalid'] .v {
+  color: var(--over);
+  font-size: 22px;
+}
+
+.wms-bar-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wms-bar {
+  position: relative;
+  height: 62px;
+  background: var(--hmi-panel);
+  border: 1px solid var(--hmi-line);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.wms-bar .fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--steel);
+  transition:
+    width 0.09s linear,
+    background-color 0.18s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wms-bar .fill {
+    transition: none;
+  }
+}
+
+.wms-bar[data-zone='near'] .fill {
+  background: var(--warn);
+}
+.wms-bar[data-zone='ok'] .fill {
+  background: var(--ok);
+}
+.wms-bar[data-zone='over'] .fill {
+  background: var(--over);
+}
+
+.wms-bar .band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: rgba(47, 191, 107, 0.16);
+  border-left: 1px solid rgba(47, 191, 107, 0.55);
+  border-right: 1px solid rgba(47, 191, 107, 0.55);
+}
+
+.wms-bar .target-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--hmi-ink);
+  opacity: 0.85;
+}
+
+.wms-bar-caption {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--hmi-muted);
+}
+
+.wms-status-line {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  padding: 9px 13px;
+  border-radius: 3px;
+  border: 1px solid var(--hmi-line);
+  background: var(--hmi-panel);
+}
+
+.wms-status-line[data-zone='ok'] {
+  color: var(--ok);
+  border-color: rgba(47, 191, 107, 0.45);
+}
+.wms-status-line[data-zone='over'] {
+  color: var(--over);
+  border-color: rgba(232, 80, 58, 0.45);
+}
+.wms-status-line[data-zone='near'] {
+  color: var(--warn);
+  border-color: rgba(240, 167, 38, 0.45);
+}
+.wms-status-line[data-zone='offline'],
+.wms-status-line[data-zone='invalid'] {
+  color: var(--over);
+  border-color: rgba(232, 80, 58, 0.45);
+  font-weight: 650;
+}
+
+.wms-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+/* ── Trainer simulator panel (training only — not part of the station UI) ─ */
+.wms-trainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 12px 18px;
+  background: repeating-linear-gradient(135deg, #2a1d12, #2a1d12 10px, #241a10 10px, #241a10 20px);
+  border-top: 2px dashed #c2571f;
+}
+
+.wms-trainer-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wms-trainer-label {
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #e0a070;
+  font-weight: 650;
+  margin-right: 4px;
+}
+
+.wms-trainer-device {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #e0a070;
+  padding: 2px 8px;
+  border: 1px solid #5a3a20;
+  border-radius: 3px;
+}
+
+.wms-trainer input {
+  background: #1a120b;
+  border: 1px solid #5a3a20;
+  color: var(--hmi-ink);
+  border-radius: 3px;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 13px;
+}
+
+.wms-trainer .wms-key {
+  min-height: 40px;
+  min-width: auto;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+/* ── Function-key hints (story 008) ─────────────────────────────── */
+.fn {
+  margin-left: 8px;
+  font-size: 10px;
+  font-family: var(--mono);
+  color: inherit;
+  opacity: 0.55;
+}
+
+/* ── Identity indicator (story 005, FR-7) ───────────────────────── */
+.identity-slot {
+  display: block;
+  margin-top: 2px;
+  font-weight: 650;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.identity-slot.verified {
+  color: var(--ok);
+}
+
+.identity-slot.mismatch {
+  color: var(--over);
+}
+
+/* ── Supervisor override dialog (story 005) ─────────────────────── */
+.wms-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 13, 17, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.wms-dialog {
+  background: var(--hmi-panel);
+  border: 1px solid var(--hmi-line);
+  border-radius: 6px;
+  padding: 24px;
+  width: min(420px, 90vw);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.wms-dialog h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.wms-dialog-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--hmi-muted);
+}
+
+.wms-dialog-field input,
+.wms-dialog-field textarea {
+  background: var(--hmi-bg);
+  border: 1px solid var(--hmi-line);
+  color: var(--hmi-ink);
+  border-radius: 3px;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 15px;
+  min-height: 44px;
+  resize: vertical;
+}
+
+.wms-dialog-error {
+  color: var(--over);
+  font-size: 13px;
+}
+
+.wms-dialog-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* ── Screen 3: Confirm & print (story 006) ──────────────────────── */
+.wms-done-stage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  min-height: 520px;
+  padding: 24px;
+}
+
+.wms-done-msg {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wms-done-msg .h {
+  font-size: 20px;
+  font-weight: 650;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.summary .r {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--hmi-line);
+  padding: 4px 0;
+}
+
+.summary .k {
+  color: var(--hmi-muted);
+}
+
+.summary .v {
+  font-weight: 650;
+  font-family: var(--mono);
+}
+
+.summary .v.good {
+  color: var(--ok);
+}
+
+.ticket {
+  background: #f4f1ea;
+  color: #1a1a1a;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 20px;
+  border-radius: 3px;
+}
+
+.ticket hr {
+  border: 0;
+  border-top: 1px dashed #9aa0a6;
+  margin: 9px 0;
+}
+
+.ticket .c {
+  text-align: center;
+}
+
+.ticket .bold {
+  font-weight: 700;
+}
+
+.wms-barcode {
+  display: flex;
+  gap: 1.5px;
+  height: 44px;
+  align-items: stretch;
+  margin: 8px 0 4px;
+}
+
+.wms-barcode i {
+  display: block;
+  background: #14171a;
+}

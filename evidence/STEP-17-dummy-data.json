@@ -1,0 +1,196 @@
+{
+  "version": "1.0.0",
+  "scenario": "WeighingMS training scenario — reproduces docs/customize-weighing-station.html (batch B-24187). Training data only; not real FCI or OrgaTEX data.",
+  "station": {
+    "stationId": "STN-01",
+    "name": "Weighing Station 01"
+  },
+  "orgatex": {
+    "dyestuffs": [
+      {
+        "code": "DYE-1180",
+        "name": "Remazol Brill. Blue RSPL",
+        "type": "DYE",
+        "colourHex": "#1f4fa8",
+        "barcode": "DYE-1180"
+      },
+      {
+        "code": "DYE-2204",
+        "name": "Remazol Red RB",
+        "type": "DYE",
+        "colourHex": "#b8253a",
+        "barcode": "DYE-2204"
+      },
+      {
+        "code": "DYE-4471",
+        "name": "Remazol Yellow RGB",
+        "type": "DYE",
+        "colourHex": "#d9a520",
+        "barcode": "DYE-4471"
+      },
+      {
+        "code": "AUX-0101",
+        "name": "Sodium Sulphate",
+        "type": "SALT",
+        "colourHex": "#c9d2dc",
+        "barcode": "AUX-0101"
+      },
+      {
+        "code": "AUX-0107",
+        "name": "Soda Ash",
+        "type": "ALKALI",
+        "colourHex": "#e4eaf0",
+        "barcode": "AUX-0107"
+      }
+    ],
+    "batches": [
+      {
+        "batchId": "B-24187",
+        "orderRef": "SO-9931",
+        "machineRef": "JET-04",
+        "fabricDesc": "100% CTN knit",
+        "fabricWeightKg": 480,
+        "shadeCode": "Teal 4C",
+        "componentCount": 5,
+        "status": "RELEASED",
+        "recipeId": "R-24187"
+      },
+      {
+        "batchId": "B-24188",
+        "orderRef": "SO-9931",
+        "machineRef": "JET-07",
+        "fabricDesc": "100% CTN knit",
+        "fabricWeightKg": 520,
+        "shadeCode": "Teal 4C",
+        "componentCount": 5,
+        "status": "QUEUED",
+        "recipeId": "R-24188"
+      },
+      {
+        "batchId": "B-24190",
+        "orderRef": "SO-9944",
+        "machineRef": "JET-02",
+        "fabricDesc": "CVC fleece",
+        "fabricWeightKg": 310,
+        "shadeCode": "Navy 12",
+        "componentCount": 7,
+        "status": "QUEUED",
+        "recipeId": "R-24190"
+      },
+      {
+        "batchId": "B-24191",
+        "orderRef": "SO-9947",
+        "machineRef": "WINCH-01",
+        "fabricDesc": "Viscose jersey",
+        "fabricWeightKg": 190,
+        "shadeCode": "Rose 08",
+        "componentCount": 4,
+        "status": "QUEUED",
+        "recipeId": "R-24191"
+      }
+    ],
+    "recipes": [
+      {
+        "recipeId": "R-24187",
+        "shadeCode": "Teal 4C",
+        "components": [
+          {
+            "componentId": "RC-24187-01",
+            "sequence": 1,
+            "dyestuffCode": "DYE-1180",
+            "uom": "g",
+            "target": "1240.0",
+            "tolerance": "6.0",
+            "displayMax": "1600",
+            "lotId": "2026-0341",
+            "containerId": "C-09"
+          },
+          {
+            "componentId": "RC-24187-02",
+            "sequence": 2,
+            "dyestuffCode": "DYE-2204",
+            "uom": "g",
+            "target": "386.0",
+            "tolerance": "2.0",
+            "displayMax": "520",
+            "lotId": "2026-0298",
+            "containerId": "C-11"
+          },
+          {
+            "componentId": "RC-24187-03",
+            "sequence": 3,
+            "dyestuffCode": "DYE-4471",
+            "uom": "g",
+            "target": "94.0",
+            "tolerance": "0.5",
+            "displayMax": "125",
+            "lotId": "2026-0387",
+            "containerId": "C-12"
+          },
+          {
+            "componentId": "RC-24187-04",
+            "sequence": 4,
+            "dyestuffCode": "AUX-0101",
+            "uom": "kg",
+            "target": "24.000",
+            "tolerance": "0.120",
+            "displayMax": "32",
+            "lotId": "2026-0112",
+            "containerId": "D-03"
+          },
+          {
+            "componentId": "RC-24187-05",
+            "sequence": 5,
+            "dyestuffCode": "AUX-0107",
+            "uom": "kg",
+            "target": "9.600",
+            "tolerance": "0.048",
+            "displayMax": "14",
+            "lotId": "2026-0155",
+            "containerId": "D-05"
+          }
+        ]
+      }
+    ]
+  },
+  "containers": [
+    { "containerId": "C-09", "type": "BUCKET", "uom": "g", "tare": "214" },
+    { "containerId": "C-11", "type": "BUCKET", "uom": "g", "tare": "214" },
+    { "containerId": "C-12", "type": "BUCKET", "uom": "g", "tare": "214" },
+    { "containerId": "D-03", "type": "DRUM", "uom": "kg", "tare": "1.850" },
+    { "containerId": "D-05", "type": "DRUM", "uom": "kg", "tare": "1.850" }
+  ],
+  "scales": [
+    {
+      "scaleId": "scale-3kg",
+      "class": "PRECISION",
+      "name": "3 kg precision",
+      "uom": "g",
+      "capacity": "3000",
+      "resolution": "0.1"
+    },
+    {
+      "scaleId": "scale-32kg",
+      "class": "FLOOR",
+      "name": "32 kg floor",
+      "uom": "kg",
+      "capacity": "32",
+      "resolution": "0.001"
+    }
+  ],
+  "operators": [
+    {
+      "operatorId": "OP-001",
+      "name": "R. Karim",
+      "shift": "Shift A",
+      "role": "OPERATOR"
+    },
+    {
+      "operatorId": "SV-001",
+      "name": "Shift Supervisor",
+      "shift": "Shift A",
+      "role": "SUPERVISOR",
+      "pinHash": "scrypt$4e4f1573c622dd127552f45422d0e216$51d3e6cb5e02cc81fb1c7b1ffac81834ae0b7721ea4830a39b9432121f40e187"
+    }
+  ]
+}

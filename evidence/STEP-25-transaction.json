@@ -1,0 +1,20 @@
+{
+  "note": "Example confirmed WeighingRecord (workbook Step 25 evidence) for Yellow RGB (C-12, 214.0 g container tare, story 005 AC1) \u2014 Blue RSPL and Red RB confirmed earlier in the same session.",
+  "record": {
+    "recordId": "a59d0ab7-a8e9-453b-ae7d-f90bfce902ef",
+    "sessionId": "34b69da9-5e5a-4562-ba71-caf4f2f248d4",
+    "componentId": "RC-24187-03",
+    "lotId": "2026-0387",
+    "containerId": "C-12",
+    "tareMg": 214000,
+    "scaleId": "scale-3kg",
+    "targetMg": 94000,
+    "toleranceMinMg": 93500,
+    "toleranceMaxMg": 94500,
+    "actualMg": 94200,
+    "uom": "g",
+    "result": "IN_TOLERANCE",
+    "operatorId": "OP-001",
+    "confirmedAt": "2026-10-30T03:25:18.176Z"
+  }
+}

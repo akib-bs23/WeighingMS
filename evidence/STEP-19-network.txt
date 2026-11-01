@@ -1,0 +1,23 @@
+WeighingMS — STEP 19 Network Evidence (Connect Batch Selection)
+Source: playwright/batch-selection.spec.ts, test "shows the queue from OrgaTEX and selects a released batch"
+Captured via page.on('request') against the browser's own requests (proxied through Vite :5173 to the API on :3000).
+
+Sequence observed when the station UI loads and the operator touches batch B-24187:
+
+1. GET /api/batches                          (Screen 1 load — the queue)
+2. GET /api/batches/B-24187                   (selection: batch read)
+3. GET /api/batches/B-24187/recipe            (selection: recipe read, only after eligibility passed)
+
+Assertions (playwright/batch-selection.spec.ts:37-40):
+  const batchIdx = requests.indexOf('/batches/B-24187');
+  const recipeIdx = requests.indexOf('/batches/B-24187/recipe');
+  expect(batchIdx).toBeGreaterThanOrEqual(0);
+  expect(recipeIdx).toBeGreaterThan(batchIdx);
+
+Result: PASS — batch is always read strictly before its recipe, matching workbook Step 19
+and the approved bolt-004 "Option A" decision (station UI reads the OrgaTEX-contract
+endpoints directly through one client module; the server independently re-enforces the
+same RELEASED-only rule at session start).
+
+No batch/recipe/operator data is embedded in src/client (enforced by
+tests/client/no-hardcoded-data.test.ts, part of the automated suite below).

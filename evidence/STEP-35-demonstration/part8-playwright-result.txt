@@ -1,0 +1,24 @@
+
+Running 19 tests using 1 worker
+
+  ✓   1 [chromium] › playwright/batch-selection.spec.ts:11:5 › shows the queue from OrgaTEX and selects a released batch (436ms)
+  ✓   2 [chromium] › playwright/batch-selection.spec.ts:45:5 › refuses a batch OrgaTEX has not released (321ms)
+  ✓   3 [chromium] › playwright/batch-selection.spec.ts:53:5 › shows OrgaTEX unavailable and recovers with Retry (311ms)
+  ✓   4 [chromium] › playwright/confirm-print.spec.ts:17:5 › identity mismatch blocks confirm and clears on the correct scan (5.9s)
+  ✓   5 [chromium] › playwright/confirm-print.spec.ts:48:5 › supervisor override authorises an out-of-tolerance reading with the wrong-PIN path first (6.1s)
+  ✓   6 [chromium] › playwright/confirm-print.spec.ts:80:5 › Quit returns the component to pending with a recovery prompt, re-selectable from scratch (3.8s)
+  ✓   7 [chromium] › playwright/confirm-print.spec.ts:101:5 › completes the full five-component batch through Screen 3, prints and reprints the ticket, then returns to the queue (17.4s)
+  ✓   8 [chromium] › playwright/e2e-full-scenario.spec.ts:18:5 › the full B-24187 scenario runs green end to end, including the stored OrgaTEX consumption record (17.3s)
+  ✓   9 [chromium] › playwright/failure-scenarios.spec.ts:13:5 › scale unavailable — safe failure (2.6s)
+  ✓  10 [chromium] › playwright/failure-scenarios.spec.ts:31:5 › OrgaTEX unavailable — defined behaviour (queue error; in-progress batch still completes) (18.5s)
+  ✓  11 [chromium] › playwright/failure-scenarios.spec.ts:62:5 › printer unavailable — defined behaviour (preview still shown, Retry recovers) (17.2s)
+  ✓  12 [chromium] › playwright/failure-scenarios.spec.ts:93:5 › invalid weight — cannot confirm (561ms)
+  ✓  13 [chromium] › playwright/failure-scenarios.spec.ts:103:5 › over tolerance — cannot confirm (2.7s)
+  ✓  14 [chromium] › playwright/failure-scenarios.spec.ts:113:5 › under tolerance — cannot confirm (354ms)
+  ✓  15 [chromium] › playwright/failure-scenarios.spec.ts:123:5 › Re-tare — weight reset (471ms)
+  ✓  16 [chromium] › playwright/failure-scenarios.spec.ts:134:5 › Quit — safe exit (3.8s)
+  ✓  17 [chromium] › playwright/failure-scenarios.spec.ts:149:5 › incomplete batch — cannot complete (285ms)
+  ✓  18 [chromium] › playwright/weighing.spec.ts:25:5 › weighs batch B-24187 component by component, switching scale and unit at component 4 (10.7s)
+  ✓  19 [chromium] › playwright/weighing.spec.ts:71:5 › an out-of-tolerance reading blocks confirm until the operator re-tares and dispenses again (9.3s)
+
+  19 passed (2.0m)

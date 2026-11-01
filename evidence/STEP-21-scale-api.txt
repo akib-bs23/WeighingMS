@@ -1,0 +1,26 @@
+WeighingMS — STEP 21 Network Evidence (Connect the Scale API)
+Source: playwright/weighing.spec.ts, "weighs batch B-24187 component by component, switching
+scale and unit at component 4" (plus a temporary, non-committed diagnostic script run to isolate
+the per-component call pattern — the committed spec is the actual coverage).
+Captured via page.on('request') against the browser's own requests (proxied through Vite :5173
+to the API on :3000, path matched, not origin — browser requests never hit :3000 directly).
+
+While the active component is Remazol Yellow RGB (3 kg precision scale, componentId
+RC-24187-03, scaleId "scale-3kg"):
+
+  GET /api/scales/scale-3kg/weight     (polled every 100 ms by useLiveWeight — TD-10)
+
+After confirming Yellow RGB, the next component is Sodium Sulphate (32 kg floor scale,
+componentId RC-24187-04, scaleId "scale-32kg"). From the very next poll onward, every request
+switches scale id automatically — the UI never asks the operator to pick a scale:
+
+  GET /api/scales/scale-32kg/weight
+
+No other scale is ever polled while a given component is active (confirmed by filtering the
+captured request log to exactly one distinct scaleId per component). This matches the approved
+API contract (bolt 002) and TD-6 (scale class is derived from the recipe component, not chosen
+by the operator).
+
+Visual confirmation: see STEP-21-scale-switch.png (Sodium Sulphate, 32 kg floor badge,
+TARE 1.850 kg) — the equivalent Yellow RGB / 3 kg precision state is visible in every other
+weigh-screen screenshot in this evidence set (e.g. STEP-20-weigh-screen.png).
